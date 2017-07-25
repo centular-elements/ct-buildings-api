@@ -1,0 +1,79 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../ct-core-utils/ct-api-provider-behaviour.html">
+
+<!--
+`ct-buildings-api`
+Element for consuming the buildings API
+
+@demo demo/index.html 
+-->
+
+<dom-module id="ct-buildings-api">
+  <template>
+    <iron-ajax id="getBuildingTypes"></iron-ajax>
+    <iron-ajax id="getVendingTypes"></iron-ajax>
+    <iron-ajax id="getBuilding"></iron-ajax>
+    <iron-ajax id="searchBuildings"></iron-ajax>
+    <iron-ajax id="updateBuilding"></iron-ajax>
+    <iron-ajax id="getBuildingDeeds"></iron-ajax>
+    <iron-ajax id="deleteBuilding"></iron-ajax>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'ct-buildings-api',
+      behaviors: [CT.Behaviours.ApiProvider],
+
+      getBuildingTypes: function() {
+        this.$.getBuildingTypes.url = this._url('/buildings/types');
+        return this._generateRequest(this.$.getBuildingTypes);
+      },
+
+      getVendingTypes: function() {
+        this.$.getVendingTypes.url = this._url('/buildings/vending-types');
+        return this._generateRequest(this.$.getVendingTypes);
+      },
+
+      getBuilding: function(id) {
+        this.$.getBuilding.url = this._url('/buildings/' + id);
+        return this._generateRequest(this.$.getBuilding);
+      },
+
+      searchBuildings: function (pageNumber, pageSize, name, streetNumber, streetName) {
+        var queryParamsClause = [
+          pageNumber ? 'page_number=' + pageNumber : null,
+          pageSize ? 'page_size=' + pageSize : null,
+          name ? 'name=' + firstName : null,
+          streetNumber ? 'street_number=' + lastName : null,
+          streetName ? 'street_name=' + email : null
+        ].filter(function (queryParam) {
+          return queryParam !== null;
+        }).join('&');
+        queryParamsClause = queryParamsClause.length > 0 ? '?' + queryParamsClause : '';
+        this.$.searchBuildings.url = this._url('/buildings/search' + queryParamsClause);
+        return this._generateRequest(this.$.searchBuildings);
+      },
+
+      updateBuilding: function(id, building) {
+        this.$.updateBuilding.url=this._url('/buildings/' + id);
+        this.$.updateBuilding.method = 'PUT';
+        this.$.updateBuilding.contentType = "application/json";
+        this.$.updateBuilding.body = building;
+        return this._generateRequest(this.$.updateBuilding);
+      },
+
+      getBuildingDeeds: function(id) {
+        this.$.getBuildingDeeds.url = this._url('/buildings/' + id + '/deeds');
+        return this._generateRequest(this.$.getBuildingDeeds);
+      },
+
+      deleteBuilding: function(id) {
+        this.$.deleteBuilding.url=this._url('/buildings/' + id);
+        this.$.deleteBuilding.method = 'DELETE';
+        return this._generateRequest(this.$.deleteBuilding);
+      },
+
+    });
+  </script>
+</dom-module>
