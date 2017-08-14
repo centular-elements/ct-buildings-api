@@ -40,7 +40,7 @@ Element for consuming the buildings API
         return this._generateRequest(this.$.getBuilding);
       },
 
-      searchBuildings: function(ownerId, pageNumber, pageSize, name, streetNumber, streetName, suburb, city, province, country, postalCode) {
+      searchBuildings: function(pageNumber, pageSize, name, streetNumber, streetName, suburb, city, province, country, postalCode) {
         var queryParamsClause = [
           pageNumber ? 'page_number=' + pageNumber : null,
           pageSize ? 'page_size=' + pageSize : null,
