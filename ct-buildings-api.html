@@ -14,6 +14,7 @@ Element for consuming the buildings API
     <iron-ajax id="getBuildingTypes"></iron-ajax>
     <iron-ajax id="getVendingTypes"></iron-ajax>
     <iron-ajax id="getBuilding"></iron-ajax>
+    <iron-ajax id="filterBuildings"></iron-ajax>
     <iron-ajax id="searchBuildings"></iron-ajax>
     <iron-ajax id="updateBuilding"></iron-ajax>
     <iron-ajax id="getBuildingDeeds"></iron-ajax>
@@ -40,7 +41,21 @@ Element for consuming the buildings API
         return this._generateRequest(this.$.getBuilding);
       },
 
-      searchBuildings: function(ownerId, pageNumber, pageSize, name, streetNumber, streetName, suburb, city, province, country, postalCode) {
+      filterBuildings: function(pageNumber, pageSize) {
+        var queryParamsClause = [
+          pageNumber ? 'page_number=' + pageNumber : null,
+          pageSize ? 'page_size=' + pageSize : null
+        ].filter(function (queryParam) {
+          return queryParam !== null;
+        }).join('&');
+
+        queryParamsClause = queryParamsClause.length > 0 ? '?' + queryParamsClause : '';
+
+        this.$.searchBuildings.url = this._url('/buildings' + queryParamsClause);
+        return this._generateRequest(this.$.searchBuildings);
+      },
+
+      searchBuildings: function(pageNumber, pageSize, name, streetNumber, streetName, suburb, city, province, country, postalCode) {
         var queryParamsClause = [
           pageNumber ? 'page_number=' + pageNumber : null,
           pageSize ? 'page_size=' + pageSize : null,
