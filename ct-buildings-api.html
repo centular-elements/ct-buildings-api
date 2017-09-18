@@ -19,6 +19,10 @@ Element for consuming the buildings API
     <iron-ajax id="updateBuilding"></iron-ajax>
     <iron-ajax id="getBuildingDeeds"></iron-ajax>
     <iron-ajax id="deleteBuilding"></iron-ajax>
+    <iron-ajax id="previewTariffs"></iron-ajax>
+    <iron-ajax id="newTariffContract"></iron-ajax>
+    <iron-ajax id="getTariffContract"></iron-ajax>
+
   </template>
 
   <script>
@@ -95,6 +99,27 @@ Element for consuming the buildings API
         this.$.deleteBuilding.method = 'DELETE';
         return this._generateRequest(this.$.deleteBuilding);
       },
+
+      previewTariffs: function(buildingId, contract) {
+        this.$.previewTariffs.url=this._url('/buildings/' + buildingId + '/tariffs/preview');
+        this.$.previewTariffs.method = 'PUT';
+        this.$.previewTariffs.contentType = "application/json";
+        this.$.previewTariffs.body = contract;
+        return this._generateRequest(this.$.previewTariffs);
+      },
+
+      newTariffContract: function(buildingId, contract) {
+        this.$.newTariffContract.url=this._url('/buildings/' + buildingId + '/tariffs');
+        this.$.newTariffContract.method = 'PUT';
+        this.$.newTariffContract.contentType = "application/json";
+        this.$.newTariffContract.body = contract;
+        return this._generateRequest(this.$.newTariffContract);
+      },
+
+      getTariffContract: function (buildingId) {
+        this.$.getTariffContract.url = this._url('/buildings/' + buildingId + '/tariffs');
+        return this._generateRequest(this.$.getTariffContract);
+      }
 
     });
   </script>
