@@ -100,7 +100,7 @@ Element for consuming the buildings API
         return this._generateRequest(this.$.deleteBuilding);
       },
 
-      previewTariffs: function(buildingId, contract) {
+      previewTariffs: function(contract) {
         this.$.previewTariffs.url=this._url('/buildings/tariffs/preview');
         this.$.previewTariffs.method = 'PUT';
         this.$.previewTariffs.contentType = "application/json";
