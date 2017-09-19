@@ -101,7 +101,7 @@ Element for consuming the buildings API
       },
 
       previewTariffs: function(buildingId, contract) {
-        this.$.previewTariffs.url=this._url('/buildings/' + buildingId + '/tariffs/preview');
+        this.$.previewTariffs.url=this._url('/buildings/tariffs/preview');
         this.$.previewTariffs.method = 'PUT';
         this.$.previewTariffs.contentType = "application/json";
         this.$.previewTariffs.body = contract;
